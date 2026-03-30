@@ -1,1 +1,26 @@
-#ifndef ANALYSISMODULE_H\n#define ANALYSISMODULE_H\n\n#include <vector>\n#include <string>\n\nclass AnalysisModule {\npublic:\n    // Functions for BPM detection\n    std::vector<int> detectBPM(const std::vector<double>& signal);\n\n    // Functions for key recognition\n    std::string recognizeKey(const std::vector<double>& signal);\n\n    // Functions for energy analysis\n    double analyzeEnergy(const std::vector<double>& signal);\n\n    // Functions for structure detection\n    void detectStructure(const std::vector<double>& signal);\n};\n\n#endif // ANALYSISMODULE_H
+#ifndef ANALYSISMODULE_H
+#define ANALYSISMODULE_H
+
+#include <vector>
+#include <string>
+#include <map>
+
+struct TrackAnalysis {
+    double bpm;
+    std::string key;
+    double energy;
+    std::vector<std::string> structure;
+};
+
+class AnalysisModule {
+public:
+    AnalysisModule();
+    
+    TrackAnalysis analyzeTrack(const std::vector<float>& audioData, int sampleRate);
+    double detectBPM(const std::vector<float>& signal, int sampleRate);
+    std::string detectKey(const std::vector<float>& signal, int sampleRate);
+    double analyzeEnergy(const std::vector<float>& signal);
+    std::vector<std::string> detectStructure(const std::vector<float>& signal);
+};
+
+#endif

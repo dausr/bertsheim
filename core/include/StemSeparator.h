@@ -1,1 +1,25 @@
-#ifndef STEMSEPARATOR_H\n#define STEMSEPARATOR_H\n\n#include <vector>\n#include <string>\n#include <cuda_runtime.h>  // Include for GPU support\n\nclass StemSeparator {\npublic:\n    // Load track from file\n    void loadTrack(const std::string& filePath);\n\n    // Process the track and separate stems\n    void process();\n\n    // Get separated stems\n    std::vector<std::vector<float>> getStem();\n\nprivate:\n    // Internal method to allocate GPU memory\n    void allocateGPUMemory(size_t size);\n\n    // Internal method to free GPU memory\n    void freeGPUMemory();\n\n    // Data members\n    std::vector<std::vector<float>> stems; // Container for stems\n    float* d_stems = nullptr; // Device pointer for GPU\n    size_t trackSize;\n};\n\n#endif // STEMSEPARATOR_H
+#ifndef STEMSEPARATOR_H
+#define STEMSEPARATOR_H
+
+#include <vector>
+#include <string>
+
+enum class StemType { Vocals, Drums, Bass, Other };
+
+class StemSeparator {
+public:
+    StemSeparator();
+    ~StemSeparator();
+
+    void loadTrack(const std::vector<float>& audioData, int sampleRate);
+    void process();
+    std::vector<float> getStem(StemType stem) const;
+    void setGPUAcceleration(bool enable);
+    bool isGPUAvailable() const;
+
+private:
+    std::vector<std::vector<float>> separatedStems;
+    bool useGPU;
+};
+
+#endif
