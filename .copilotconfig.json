@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "settings": {
+    "continuous_integration": true,
+    "workflow": true,
+    "code_generation": true,
+    "documentation": true,
+    "issue_management": true
+  }
+}
